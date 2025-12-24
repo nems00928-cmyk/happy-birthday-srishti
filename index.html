@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+      font-family:cursive;
+      text-align:center;
+    }
+    .box{
+      background:white;
+      padding:20px;
+      border-radius:20px;
+      box-shadow:0 10px 25px rgba(0,0,0,.2);
+      width:90%;
+      max-width:350px;
+    }
+    input{
+      padding:10px;
+      width:90%;
+      border-radius:20px;
+      border:1px solid #ccc;
+      font-size:16px;
+      text-align:center;
+    }
+    button{
+      margin-top:15px;
+      padding:10px 25px;
+      border:none;
+      border-radius:20px;
+      background:#ff4d6d;
+      color:white;
+      font-size:16px;
+    }
+    .hidden{display:none;}
+  </style>
+</head>
+<body>
+
+<div class="box" id="step1">
+  <h2>💖 Enter Your Name 💖</h2>
+  <input id="name" placeholder="Type your name">
+  <br>
+  <button onclick="openGift()">Open Surprise 🎁</button>
+</div>
+
+<div class="box hidden" id="step2">
+  <h1>🎉 Happy Birthday <span id="n"></span> 🎉</h1>
+  <p>
+    You stole my heart ❤️  
+    and my blankets too 😄  
+    Life with you is love, laughter,  
+    and a little bit of madness 💕
+  </p>
+  <p>— With love 💖</p>
+</div>
+
+<script>
+function openGift(){
+  let name=document.getElementById("name").value;
+  if(name==="") return;
+  document.getElementById("n").innerText=name;
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
