@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday Blast</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  margin:0;height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(120deg,#000,#2b0055);
+  font-family:cursive;color:#fff;text-align:center;
+  overflow:hidden;
+}
+.box{
+  background:rgba(0,0,0,.6);
+  padding:25px;border-radius:20px;
+  width:90%;max-width:360px;
+}
+input,button{
+  width:90%;padding:12px;
+  border-radius:20px;border:none;
+  margin-top:10px;font-size:16px;
+}
+button{background:#ff0055;color:#fff;font-weight:bold}
+.hidden{display:none}
+h1{
+  font-size:34px;
+  color:#fff;
+  text-shadow:0 0 10px pink,0 0 30px red;
+  animation:pulse 1s infinite alternate;
+}
+@keyframes pulse{
+  from{transform:scale(1)}
+  to{transform:scale(1.1)}
+}
+canvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:-1;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="c"></canvas>
+
+<div class="box" id="step1">
+  <h2>🎁 Enter Name 🎁</h2>
+  <input id="name" placeholder="Type name">
+  <button onclick="start()">OPEN SURPRISE 💥</button>
+</div>
+
+<div class="box hidden" id="step2">
+  <h1>🎉 HAPPY BIRTHDAY <br><span id="n"></span> 🎉</h1>
+  <p>
+    You are cute, you are crazy 😄<br>
+    Romantic by heart, funny by nature ❤️<br><br>
+    Cake is waiting, smiles are loading 🎂✨
+  </p>
+</div>
+
+<script>
+const c=document.getElementById("c");
+const x=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+let p=[];
+
+function start(){
+  let n=document.getElementById("name").value;
+  if(!n) return;
+  document.getElementById("n").innerText=n.toUpperCase();
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
+  blast();
+  setInterval(blast,1200);
+}
+
+function blast(){
+  for(let i=0;i<120;i++){
+    p.push({
+      x:Math.random()*c.width,
+      y:c.height+20,
+      r:Math.random()*4+2,
+      vy:-(Math.random()*6+4),
+      c:`hsl(${Math.random()*360},100%,60%)`
+    });
+  }
+}
+
+function draw(){
+  x.clearRect(0,0,c.width,c.height);
+  p.forEach(b=>{
+    b.y+=b.vy;
+    x.beginPath();
+    x.arc(b.x,b.y,b.r,0,Math.PI*2);
+    x.fillStyle=b.c;
+    x.fill();
+  });
+  p=p.filter(b=>b.y>-10);
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+</body>
+</html>
